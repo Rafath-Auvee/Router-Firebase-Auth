@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 import app from "../../firebase.init.js";
 
 const googleProvider = new GoogleAuthProvider();
@@ -9,7 +15,7 @@ const useFirebase = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {}, []);
-  
+
   const signInWithGoogle = () => {
     console.log("Signing in soon");
     signInWithPopup(auth, googleProvider)
@@ -19,7 +25,8 @@ const useFirebase = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        setUser(user)
+        setUser(user);
+        console.log(user);
         // ...
       })
       .catch((error) => {
@@ -34,8 +41,30 @@ const useFirebase = () => {
       });
   };
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      if (user) {
+        const uid = user.uid;
+      } else {
+      }
+    });
+  }, []);
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+
+  };
+
   return {
     user,
+    handleSignOut,
     signInWithGoogle,
   };
   //return [user, setUser];
