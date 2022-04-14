@@ -9,12 +9,16 @@ const Login = () => {
   const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
   return (
     <div>
+      {/* <span>Hello! {user?.displayName && user.displayName}</span> */}
+      {/* <br />
+      <br /> */}
       Login
       <div className="" style={{margin: '20px'}}>
         <button onClick={ () => signInWithGoogle()} >
             Google Sign In
         </button>
       </div>
+      
       <form action="">
         <input type="email" name="" id="email" placeholder="Your Email" />
         <br />
