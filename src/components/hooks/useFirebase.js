@@ -9,7 +9,7 @@ const useFirebase = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {}, []);
-
+  
   const signInWithGoogle = () => {
     console.log("Signing in soon");
     signInWithPopup(auth, googleProvider)
@@ -19,6 +19,7 @@ const useFirebase = () => {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        setUser(user)
         // ...
       })
       .catch((error) => {
